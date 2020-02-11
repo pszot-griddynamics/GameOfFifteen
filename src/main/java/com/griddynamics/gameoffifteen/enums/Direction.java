@@ -1,4 +1,4 @@
-package com.griddynamics.javastarter.enums;
+package com.griddynamics.gameoffifteen.enums;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

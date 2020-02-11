@@ -1,4 +1,4 @@
-package com.griddynamics.javastarter.move.interfaces;
+package com.griddynamics.gameoffifteen.move.interfaces;
 
 public interface Instruction {
     void process();

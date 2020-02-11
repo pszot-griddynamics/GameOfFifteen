@@ -1,8 +1,8 @@
-package com.griddynamics.javastarter.result;
+package com.griddynamics.gameoffifteen.result;
 
-import com.griddynamics.javastarter.Board;
-import com.griddynamics.javastarter.move.analyse.MoveAnalyser;
-import com.griddynamics.javastarter.move.interfaces.Move;
+import com.griddynamics.gameoffifteen.Board;
+import com.griddynamics.gameoffifteen.move.analyse.MoveAnalyser;
+import com.griddynamics.gameoffifteen.move.interfaces.Move;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.PrintStream;

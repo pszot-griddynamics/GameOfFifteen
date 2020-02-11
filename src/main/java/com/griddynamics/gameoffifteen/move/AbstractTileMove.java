@@ -1,7 +1,7 @@
-package com.griddynamics.javastarter.move;
+package com.griddynamics.gameoffifteen.move;
 
-import com.griddynamics.javastarter.enums.Direction;
-import com.griddynamics.javastarter.move.interfaces.Move;
+import com.griddynamics.gameoffifteen.enums.Direction;
+import com.griddynamics.gameoffifteen.move.interfaces.Move;
 
 import java.util.Arrays;
 

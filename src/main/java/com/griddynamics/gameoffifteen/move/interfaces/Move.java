@@ -1,6 +1,6 @@
-package com.griddynamics.javastarter.move.interfaces;
+package com.griddynamics.gameoffifteen.move.interfaces;
 
-import com.griddynamics.javastarter.enums.Direction;
+import com.griddynamics.gameoffifteen.enums.Direction;
 
 public interface Move extends Instruction {
     Direction getDirection();

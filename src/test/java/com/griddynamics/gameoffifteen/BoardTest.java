@@ -1,6 +1,6 @@
-package com.griddynamics.javastarter;
+package com.griddynamics.gameoffifteen;
 
-import com.griddynamics.javastarter.move.analyse.MoveAnalyser;
+import com.griddynamics.gameoffifteen.move.analyse.MoveAnalyser;
 import org.junit.Before;
 import org.junit.Test;
 

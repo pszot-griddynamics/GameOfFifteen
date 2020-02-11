@@ -1,9 +1,9 @@
-package com.griddynamics.javastarter.move.analyse;
+package com.griddynamics.gameoffifteen.move.analyse;
 
-import com.griddynamics.javastarter.enums.Direction;
-import com.griddynamics.javastarter.move.RandomTileMove;
-import com.griddynamics.javastarter.move.TileMove;
-import com.griddynamics.javastarter.move.interfaces.Move;
+import com.griddynamics.gameoffifteen.enums.Direction;
+import com.griddynamics.gameoffifteen.move.RandomTileMove;
+import com.griddynamics.gameoffifteen.move.TileMove;
+import com.griddynamics.gameoffifteen.move.interfaces.Move;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

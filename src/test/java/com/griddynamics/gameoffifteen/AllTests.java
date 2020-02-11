@@ -1,4 +1,4 @@
-package com.griddynamics.javastarter;
+package com.griddynamics.gameoffifteen;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

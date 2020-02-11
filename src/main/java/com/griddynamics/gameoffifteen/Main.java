@@ -1,10 +1,9 @@
-package com.griddynamics.javastarter;
+package com.griddynamics.gameoffifteen;
 
-import com.griddynamics.javastarter.enums.Direction;
-import com.griddynamics.javastarter.move.analyse.MoveAnalyser;
-import com.griddynamics.javastarter.move.interfaces.Move;
-import com.griddynamics.javastarter.result.ConsoleResultWriter;
-import com.griddynamics.javastarter.result.FileResultWriter;
+import com.griddynamics.gameoffifteen.enums.Direction;
+import com.griddynamics.gameoffifteen.move.analyse.MoveAnalyser;
+import com.griddynamics.gameoffifteen.result.ConsoleResultWriter;
+import com.griddynamics.gameoffifteen.result.FileResultWriter;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedWriter;

@@ -1,6 +1,6 @@
-package com.griddynamics.javastarter.move;
+package com.griddynamics.gameoffifteen.move;
 
-import com.griddynamics.javastarter.enums.Direction;
+import com.griddynamics.gameoffifteen.enums.Direction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;

@@ -1,8 +1,8 @@
-package com.griddynamics.javastarter;
+package com.griddynamics.gameoffifteen;
 
-import com.griddynamics.javastarter.enums.Direction;
-import com.griddynamics.javastarter.move.TileMove;
-import com.griddynamics.javastarter.move.analyse.MoveAnalyser;
+import com.griddynamics.gameoffifteen.enums.Direction;
+import com.griddynamics.gameoffifteen.move.TileMove;
+import com.griddynamics.gameoffifteen.move.analyse.MoveAnalyser;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
