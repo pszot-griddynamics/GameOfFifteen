@@ -64,6 +64,7 @@ public class Board {
     public void setMatrix(int[] matrix) {
         this.matrix = matrix;
         this.emptyTileIndex = indexOfEmptyTile();
+        if (this.emptyTileIndex == -1) throw new IllegalStateException("Board does not contains empty tile!");
     }
 
     public Random getRandom() {
@@ -80,7 +81,7 @@ public class Board {
 
 
     /**
-     * @return Index of empty tile inside the board
+     * @return Index of empty tile inside the board or -1 if empty tile does not exists
      */
     private int indexOfEmptyTile() {
         for (int i = 0; i < this.matrix.length; i++) {
