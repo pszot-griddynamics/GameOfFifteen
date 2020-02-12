@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public final class Main {
+    private static final File OUTPUT_FILE = new File("src/main/java/out.txt");
 
     public static void main(@NotNull final String[] args) {
 
@@ -54,8 +55,7 @@ public final class Main {
 
         consoleResultWriter.write(analyser.isComplete(board.getMatrix()) ? "Puzzle solved!" : "Try again later!");
 
-        File file = new File("src/main/java/out.txt");
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(OUTPUT_FILE))) {
 
             FileResultWriter resultWriter = new FileResultWriter(writer, board);
 
