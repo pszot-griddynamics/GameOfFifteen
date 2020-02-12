@@ -20,4 +20,9 @@ public class RandomTileMove extends AbstractTileMove {
     public void revert() {
         swapTiles();
     }
+
+    @Override
+    public RandomTileMove clone() {
+        return (RandomTileMove) super.clone();
+    }
 }

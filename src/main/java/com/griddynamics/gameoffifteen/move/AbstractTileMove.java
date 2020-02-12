@@ -9,7 +9,7 @@ public abstract class AbstractTileMove implements Move {
 
     protected final Direction direction;
     protected int from;
-    protected final int[] board;
+    protected int[] board;
 
     public AbstractTileMove(final Direction direction, final int from, final int[] board) {
 
@@ -48,4 +48,20 @@ public abstract class AbstractTileMove implements Move {
         return board;
     }
 
+    @Override
+    public AbstractTileMove clone() {
+
+        try {
+
+            final AbstractTileMove clone = (AbstractTileMove) super.clone();
+            clone.board = Arrays.copyOf(board, board.length);
+
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
 }

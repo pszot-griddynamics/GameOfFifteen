@@ -20,7 +20,8 @@ public final class Main {
         MoveAnalyser analyser = new MoveAnalyser();
         Board board = new Board(new Random(), analyser);
 
-        board.setMatrix(new int[]{1, 2, 3, 0, 5, 6, 7, 4, 9, 10, 11, 8, 13, 14, 15, 12});
+        // Example matrix just to show how it works with a simple case (Just uncomment if you want to see)
+        //board.setMatrix(new int[]{1, 2, 3, 0, 5, 6, 7, 4, 9, 10, 11, 8, 13, 14, 15, 12});
 
         Scanner scanner = new Scanner(System.in);
 

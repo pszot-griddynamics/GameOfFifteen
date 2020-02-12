@@ -1,6 +1,8 @@
 package com.griddynamics.gameoffifteen.move.analyse;
 
+import com.griddynamics.gameoffifteen.Board;
 import com.griddynamics.gameoffifteen.enums.Direction;
+import com.griddynamics.gameoffifteen.move.AbstractTileMove;
 import com.griddynamics.gameoffifteen.move.RandomTileMove;
 import com.griddynamics.gameoffifteen.move.TileMove;
 import com.griddynamics.gameoffifteen.move.interfaces.Move;
@@ -108,18 +110,43 @@ public class MoveAnalyser {
     }
 
     /**
+     * Get matrix state before first move
+     *
+     * @return Array that represents state of board before any move
+     */
+    public int[] getBeginningState() {
+
+        if (moves.size() > 0) {
+
+            Move firstMove = moves.get(0);
+
+            firstMove.revert();
+            final int[] board = firstMove.getBoard().clone();
+            firstMove.process();
+
+            return board;
+        }
+
+        return null;
+    }
+
+    /**
      * Checks if the given board is solved
      *
      * @param matrix Representation of board
      * @return True if board is solved or false if not
      */
     public boolean isComplete(@NotNull final int[] matrix) {
-        return Arrays.equals(matrix, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0});
+        return Arrays.equals(matrix, Board.SOLVED_BOARD);
     }
 
     @NotNull
-    public List<Move> getMoves() {
-        return new ArrayList<>(moves);
+    public List<Move> getCopyOfMoves() {
+        final ArrayList<Move> movesCopy = new ArrayList<>();
+
+        this.moves.forEach(move -> movesCopy.add(((AbstractTileMove) move).clone()));
+
+        return movesCopy;
     }
 
     /**

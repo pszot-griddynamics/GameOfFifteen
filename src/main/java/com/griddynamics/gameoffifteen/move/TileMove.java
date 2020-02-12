@@ -18,4 +18,8 @@ public class TileMove extends AbstractTileMove {
         swapTiles();
     }
 
+    @Override
+    public TileMove clone() {
+        return (TileMove) super.clone();
+    }
 }

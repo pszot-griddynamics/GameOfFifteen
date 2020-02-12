@@ -43,7 +43,7 @@ public class ConsoleResultWriter implements ResultWriter {
     /**
      * Writes to the console board with the direction of performed move
      * example:
-     *
+     * <p>
      * RIGHT
      * [ 0  1  2  3]
      * [ 3  5  6  7]
@@ -64,8 +64,8 @@ public class ConsoleResultWriter implements ResultWriter {
      */
     public void writeAnalyser() {
         MoveAnalyser analyser = board.getAnalyser();
-        write("Puzzle has been solved in " + analyser.getMoves().size() + " moves\n");
-        analyser.getMoves().forEach(this::writeBoard);
+        write("Puzzle has been solved in " + analyser.getCopyOfMoves().size() + " moves\n");
+        analyser.getCopyOfMoves().forEach(this::writeBoard);
     }
 
     @Override

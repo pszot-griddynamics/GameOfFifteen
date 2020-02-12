@@ -78,14 +78,10 @@ public class FileResultWriter implements ResultWriter {
     public void writeAnalyser() {
         MoveAnalyser analyser = board.getAnalyser();
 
-        final List<Move> moves = analyser.getMoves();
-        if (moves.size() > 0) {
-            final Move move = moves.get(0);
-            move.revert();
-            writeBoard(move.getBoard());
-            newLine();
-            move.process();
-        }
+        final List<Move> moves = analyser.getCopyOfMoves();
+
+        writeBoard(analyser.getBeginningState());
+        newLine();
 
         write("Puzzle has been solved in " + moves.size() + " moves");
         newLine();

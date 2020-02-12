@@ -27,23 +27,19 @@ public class BoardTest {
 
     @Test
     public void shouldFillMatrix() {
-
         int[] matrix = board.getMatrix();
         Arrays.sort(matrix);
         assertEquals(Arrays.toString(matrix), Arrays.toString(SORTED_MATRIX));
-
     }
 
     @Test(expected = IllegalStateException.class)
-    public void mustContainEmptyTile(){
+    public void mustContainEmptyTile() {
         board.setMatrix(new int[]{-1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
     }
 
     @Test
     public void shouldFindIndexOfEmptyTile() {
-
         board.setMatrix(SOLVED_MATRIX);
         assertThat(board.getEmptyTileIndex(), equalTo(15));
-
     }
 }
