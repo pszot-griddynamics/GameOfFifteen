@@ -1,17 +1,18 @@
 package com.griddynamics.gameoffifteen;
 
 import com.griddynamics.gameoffifteen.enums.Direction;
+import com.griddynamics.gameoffifteen.move.AbstractTileMove;
 import com.griddynamics.gameoffifteen.move.TileMove;
 import com.griddynamics.gameoffifteen.move.analyse.MoveAnalyser;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Random;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class MoveTest {
     private final int[] RANDOM_MATRIX = {1, 2, 3, 0, 5, 6, 7, 4, 9, 10, 11, 8, 13, 14, 15, 12};
@@ -28,16 +29,18 @@ public class MoveTest {
     @Test
     public void shouldNotMoveEmptyTileToTheEdge() {
         MoveAnalyser analyser = new MoveAnalyser();
-        assertFalse(analyser.canMove(RANDOM_MATRIX, 3, Direction.RIGHT));
+        AbstractTileMove move = new TileMove(Direction.RIGHT, 3, RANDOM_MATRIX);
+        assertFalse(analyser.canMove(move));
     }
 
     @Test
     public void shouldPerformRandomMove() {
         final int[] RANDOM_MATRIX = {1, 2, 3, 4, 5, 0, 7, 6, 9, 10, 11, 8, 13, 14, 15, 12};
 
-        MoveAnalyser analyser = new MoveAnalyser();
+        TileMove move = new TileMove(Direction.getRandomDirection(), 5, RANDOM_MATRIX);
+        move.process();
 
-        int[] matrix = analyser.randomMove(RANDOM_MATRIX, 5, new Random());
+        int[] matrix = move.getBoard();
 
         MatcherAssert.assertThat(Arrays.toString(RANDOM_MATRIX), not(equalTo(Arrays.toString(matrix))));
     }
@@ -61,20 +64,6 @@ public class MoveTest {
         board = moveDown(board, 11);
 
         assertEquals(Arrays.toString(SOLVED_MATRIX), Arrays.toString(board));
-    }
-
-    @Test
-    public void shouldBeCompleteWhenCorrectIndexes() {
-        MoveAnalyser analyser = new MoveAnalyser();
-
-        assertTrue(analyser.isComplete(SOLVED_MATRIX));
-    }
-
-    @Test
-    public void shouldNotBeCompleteWhenIncorrectIndexes() {
-        MoveAnalyser analyser = new MoveAnalyser();
-
-        assertFalse(analyser.isComplete(RANDOM_MATRIX));
     }
 
     private int[] moveDown(int[] matrix, int from) {

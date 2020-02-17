@@ -3,6 +3,8 @@ package com.griddynamics.gameoffifteen.enums;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public enum Direction {
     UP(-4, "U"), RIGHT(1, "R"), DOWN(4, "D"), LEFT(-1, "L");
 
@@ -14,10 +16,20 @@ public enum Direction {
         this.alias = alias;
     }
 
+    /**
+     * Index modifier that is used to calculate final index of tile after move.
+     *
+     * @return Index modifier
+     */
     public int getIndexMod() {
         return indexMod;
     }
 
+    /**
+     * Shortened identifier of direction.
+     *
+     * @return Alias of direction
+     */
     public String getAlias() {
         return alias;
     }
@@ -56,5 +68,17 @@ public enum Direction {
             if (direction.getAlias().equalsIgnoreCase(alias)) return direction;
         }
         return null;
+    }
+
+    /**
+     * Get random direction based on {@code ThreadLocalRandom}.
+     *
+     * @return Random direction
+     */
+    public static Direction getRandomDirection() {
+        final ThreadLocalRandom random = ThreadLocalRandom.current();
+        final Direction[] values = values();
+
+        return values[random.nextInt(values.length)];
     }
 }

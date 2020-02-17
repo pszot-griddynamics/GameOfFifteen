@@ -9,7 +9,10 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.After;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -31,11 +34,7 @@ public class ResultWriterTest {
     @NotNull
     @Contract(" -> new")
     private FileResultWriter createNewWriter() {
-        try {
-            return new FileResultWriter(new BufferedWriter(new FileWriter(out)), board);
-        } catch (IOException e) {
-            throw new RuntimeException();
-        }
+        return new FileResultWriter(out, board);
     }
 
     @NotNull
@@ -91,6 +90,7 @@ public class ResultWriterTest {
 
         try (FileResultWriter newWriter = createNewWriter()) {
             board.setMatrix(RANDOM_MATRIX);
+            board.setBeginningState(RANDOM_MATRIX);
             board.move(Direction.DOWN);
             newWriter.writeAnalyser();
         }

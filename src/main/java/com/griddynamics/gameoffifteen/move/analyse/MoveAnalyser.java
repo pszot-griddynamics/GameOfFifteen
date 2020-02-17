@@ -3,20 +3,16 @@ package com.griddynamics.gameoffifteen.move.analyse;
 import com.griddynamics.gameoffifteen.Board;
 import com.griddynamics.gameoffifteen.enums.Direction;
 import com.griddynamics.gameoffifteen.move.AbstractTileMove;
-import com.griddynamics.gameoffifteen.move.RandomTileMove;
-import com.griddynamics.gameoffifteen.move.TileMove;
-import com.griddynamics.gameoffifteen.move.interfaces.Move;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class MoveAnalyser {
 
-    private List<Move> moves = new ArrayList<>();
+    private List<AbstractTileMove> moves = new ArrayList<>();
 
     public MoveAnalyser() {
     }
@@ -24,83 +20,54 @@ public class MoveAnalyser {
     /**
      * Checks if the move from specified index to specified direction is possible.
      *
-     * @param matrix    Array of numbers representing a board
-     * @param fromIndex Index of given array from which move is performed
-     * @param direction Direction of the move
+     * @param move Move to check
      * @return True if that move can be performed or false if not.
      */
-    public boolean canMove(@NotNull final int[] matrix, final int fromIndex, @NotNull final Direction direction) {
+    public boolean canMove(@NotNull final AbstractTileMove move) {
+        final Direction direction = move.getDirection();
+        int length = move.getBoard().length;
+        int newIndex = move.getTo();
 
-        int indexMod = direction.getIndexMod();
-
-        int length = matrix.length;
-        int newIndex = fromIndex + indexMod;
-
-        return newIndex < length && newIndex >= 0 && !pointsToEdge(fromIndex, direction);
-
+        return newIndex < length && newIndex >= 0 && !pointsToEdge(move.getFrom(), direction);
     }
 
     /**
-     * Creates and performs a new move.
-     *
-     * @param matrix         Array of numbers representing a board
-     * @param emptyTileIndex Index of given array from which move is performed (actually index of tile that represents '0')
-     * @param direction      Direction of the move
-     * @return Array that represents a state after performing tile move
-     */
-    public int[] move(@NotNull final int[] matrix, final int emptyTileIndex, @NotNull final Direction direction) {
-
-        TileMove tileMove = new TileMove(direction, emptyTileIndex, matrix);
-
-        return move(tileMove);
-
-    }
-
-    /**
-     * Performs given move and then save the state of this move
+     * Performs given move and then save the state of this move.
      *
      * @param move Move to perform
      * @return Array that represents a state after performing tile move
+     * @deprecated Methods in analyser shouldn't change state of any move.
      */
-    public int[] move(@NotNull final Move move) {
-
+    @Deprecated(forRemoval = true)
+    public int[] move(@NotNull final AbstractTileMove move) {
         move.process();
         moves.add(move);
 
         return move.getBoard();
-
     }
 
     /**
-     * Performs move at random direction
+     * Saves the move instruction and checks if the board is solved.
      *
-     * @param matrix         Array of numbers representing a board
-     * @param emptyTileIndex Index of given array from which move is performed (actually index of tile that represents '0')
-     * @param random         Random numbers generator
-     * @return Array that represents a state after performing tile move
+     * @param move Performed move
+     * @return true if board is solved or false if not, it depends of state of last performed move
      */
-    public int[] randomMove(@NotNull final int[] matrix, final int emptyTileIndex, @NotNull final Random random) {
-
-        RandomTileMove randomTileMove = new RandomTileMove(matrix, emptyTileIndex, random);
-
-        if (canMove(matrix, emptyTileIndex, randomTileMove.getDirection())) {
-            return move(randomTileMove);
-        }
-
-        return matrix;
-
+    public boolean analyse(@NotNull final AbstractTileMove move) {
+        this.moves.add(move);
+        return isComplete();
     }
 
     /**
-     * Reverts last performed move
+     * Reverts last performed move.
      *
      * @return Array that represents board after revert or null if none moves has been performed
+     * @deprecated Methods in analyser shouldn't change state of any move.
      */
     @Nullable
+    @Deprecated(forRemoval = true)
     public int[] revertLastMove() {
-
         if (moves.size() > 0) {
-            Move lastMove = moves.get(moves.size() - 1);
+            AbstractTileMove lastMove = moves.get(moves.size() - 1);
             lastMove.revert();
             moves.remove(lastMove);
             return lastMove.getBoard();
@@ -110,41 +77,38 @@ public class MoveAnalyser {
     }
 
     /**
-     * Get matrix state before first move
+     * Get last performed move.
      *
-     * @return Array that represents state of board before any move
+     * @return Last performed move or null if none has been performed
      */
-    public int[] getBeginningState() {
-
-        if (moves.size() > 0) {
-
-            Move firstMove = moves.get(0);
-
-            firstMove.revert();
-            final int[] board = firstMove.getBoard().clone();
-            firstMove.process();
-
-            return board;
-        }
-
+    @Nullable
+    public AbstractTileMove getLastMove() {
+        if (moves.size() > 0) return moves.get(moves.size() - 1);
         return null;
     }
 
     /**
-     * Checks if the given board is solved
+     * Checks if the last performed move board is solved.
      *
-     * @param matrix Representation of board
      * @return True if board is solved or false if not
      */
-    public boolean isComplete(@NotNull final int[] matrix) {
-        return Arrays.equals(matrix, Board.SOLVED_BOARD);
+    public boolean isComplete() {
+        AbstractTileMove lastMove = getLastMove();
+        return lastMove != null && Arrays.equals(lastMove.getBoard(), Board.SOLVED_BOARD);
     }
 
+    /**
+     * Reason of why this method returns copy of the move register is to prevent any manual changes.
+     * Change of state of any instance that is not a tail of the register will break integration of analyser.
+     * (It won't show actual steps that have been made to the board)
+     *
+     * @return Copy of list of moves of this analyser
+     */
     @NotNull
-    public List<Move> getCopyOfMoves() {
-        final ArrayList<Move> movesCopy = new ArrayList<>();
+    public List<AbstractTileMove> getCopyOfMoves() {
+        final ArrayList<AbstractTileMove> movesCopy = new ArrayList<>();
 
-        this.moves.forEach(move -> movesCopy.add(((AbstractTileMove) move).clone()));
+        this.moves.forEach(move -> movesCopy.add(move.clone()));
 
         return movesCopy;
     }

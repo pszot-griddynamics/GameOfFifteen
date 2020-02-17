@@ -14,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class BoardTest {
     private final int[] SORTED_MATRIX = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
     private final int[] SOLVED_MATRIX = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
+    private final int[] INVALID_MATRIX = new int[]{-1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
     private Board board;
 
@@ -34,7 +35,7 @@ public class BoardTest {
 
     @Test(expected = IllegalStateException.class)
     public void mustContainEmptyTile() {
-        board.setMatrix(new int[]{-1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
+        board.setMatrix(INVALID_MATRIX);
     }
 
     @Test

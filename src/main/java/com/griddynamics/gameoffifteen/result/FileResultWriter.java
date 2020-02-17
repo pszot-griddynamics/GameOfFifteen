@@ -1,34 +1,34 @@
 package com.griddynamics.gameoffifteen.result;
 
 import com.griddynamics.gameoffifteen.Board;
+import com.griddynamics.gameoffifteen.move.AbstractTileMove;
 import com.griddynamics.gameoffifteen.move.analyse.MoveAnalyser;
-import com.griddynamics.gameoffifteen.move.interfaces.Move;
+import com.griddynamics.gameoffifteen.utils.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class FileResultWriter implements ResultWriter {
+public final class FileResultWriter implements ResultWriter {
     private final BufferedWriter out;
     private final Board board;
-    private final String matrixFormat =
-            "[%2s %2s %2s %2s]\n"
-                    + "[%2s %2s %2s %2s]\n"
-                    + "[%2s %2s %2s %2s]\n"
-                    + "[%2s %2s %2s %2s]";
 
-    public FileResultWriter(final BufferedWriter out, final Board board) {
+    public FileResultWriter(final File out, final Board board) {
 
-        this.out = out;
+        try {
+            this.out = new BufferedWriter(new FileWriter(out));
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         this.board = board;
 
     }
 
     /**
-     * Write board to the file as matrix
+     * Write board to the file as matrix.
      * example:
      * [ 0  1  2  3]
      * [ 3  5  6  7]
@@ -38,20 +38,17 @@ public class FileResultWriter implements ResultWriter {
      * @param matrix Matrix to be written
      */
     public void writeBoard(final int[] matrix) {
-
-        String[] formatArgs = Arrays.stream(matrix).mapToObj(Integer::toString).collect(Collectors.toList()).toArray(new String[0]);
-        String formattedMatrix = String.format(matrixFormat, formatArgs);
+        String formattedMatrix = ArrayUtils.arrayToMatrixString(matrix);
 
         newLine();
         for (String line : formattedMatrix.split("\n")) {
             write(line);
             newLine();
         }
-
     }
 
     /**
-     * Writes to the file board with the direction of performed move
+     * Writes to the file board with the direction of performed move.
      * example:
      * <p>
      * RIGHT
@@ -62,7 +59,7 @@ public class FileResultWriter implements ResultWriter {
      *
      * @param move Move to be written
      */
-    public void writeBoard(@NotNull final Move move) {
+    public void writeBoard(@NotNull final AbstractTileMove move) {
 
         newLine();
         write(move.getDirection().toString());
@@ -72,15 +69,15 @@ public class FileResultWriter implements ResultWriter {
     }
 
     /**
-     * Write number of moves performed inside analyser along with these moves
-     * Also writes a starting state of board by reverting first move and writes it at the beginning of the file
+     * Write number of moves performed inside analyser along with these moves.
+     * Also writes a starting state of board by reverting first move and writes it at the beginning of the file.
      */
     public void writeAnalyser() {
         MoveAnalyser analyser = board.getAnalyser();
 
-        final List<Move> moves = analyser.getCopyOfMoves();
+        final List<AbstractTileMove> moves = analyser.getCopyOfMoves();
 
-        writeBoard(analyser.getBeginningState());
+        writeBoard(board.getBeginningState());
         newLine();
 
         write("Puzzle has been solved in " + moves.size() + " moves");
@@ -107,15 +104,14 @@ public class FileResultWriter implements ResultWriter {
         }
     }
 
-    @Override
-    public String getMatrixFormat() {
-        return this.matrixFormat;
-    }
-
+    /**
+     * @return File output stream as Buffered writer
+     */
     public BufferedWriter getOut() {
         return out;
     }
 
+    @Override
     public Board getBoard() {
         return board;
     }
