@@ -32,21 +32,6 @@ public class MoveAnalyser {
     }
 
     /**
-     * Performs given move and then save the state of this move.
-     *
-     * @param move Move to perform
-     * @return Array that represents a state after performing tile move
-     * @deprecated Methods in analyser shouldn't change state of any move.
-     */
-    @Deprecated(forRemoval = true)
-    public int[] move(@NotNull final AbstractTileMove move) {
-        move.process();
-        moves.add(move);
-
-        return move.getBoard();
-    }
-
-    /**
      * Saves the move instruction and checks if the board is solved.
      *
      * @param move Performed move
@@ -55,25 +40,6 @@ public class MoveAnalyser {
     public boolean analyse(@NotNull final AbstractTileMove move) {
         this.moves.add(move);
         return isComplete();
-    }
-
-    /**
-     * Reverts last performed move.
-     *
-     * @return Array that represents board after revert or null if none moves has been performed
-     * @deprecated Methods in analyser shouldn't change state of any move.
-     */
-    @Nullable
-    @Deprecated(forRemoval = true)
-    public int[] revertLastMove() {
-        if (moves.size() > 0) {
-            AbstractTileMove lastMove = moves.get(moves.size() - 1);
-            lastMove.revert();
-            moves.remove(lastMove);
-            return lastMove.getBoard();
-        }
-
-        return null;
     }
 
     /**

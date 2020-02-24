@@ -38,7 +38,7 @@ public class Board {
     }
 
     /**
-     * Perform a move of the empty tile in give direction.
+     * Perform a move of the empty tile in given direction.
      *
      * @param direction Direction of the move
      * @return True if move has been performed or false if not

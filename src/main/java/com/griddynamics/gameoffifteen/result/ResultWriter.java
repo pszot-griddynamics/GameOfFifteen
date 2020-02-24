@@ -25,7 +25,7 @@ public interface ResultWriter extends AutoCloseable {
     void newLine();
 
     /**
-     * Writes tex to an {@code java.io.OutputStream} specified in concrete implementation.
+     * Writes text to an {@code java.io.OutputStream} specified in concrete implementation.
      *
      * @param text Text to be written
      */
